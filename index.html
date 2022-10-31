@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>РК 1</title>
+</head>
+<script>
+    var str;
+
+    function btn_input() {
+        str = document.getElementById("input").value.split(' ');
+        var valid = true;
+
+        try {
+            for (var i = 0; i < str.length; i++) {
+                if (str[i].match(/[-0-9]/gi).join('') != str[i]) {
+                    valid = false;
+                }
+            }
+        }
+
+        catch {
+            valid = false;
+        }
+
+        if (valid) {
+            var output = document.getElementById("output");
+            var action_button = document.getElementById("action-button");
+
+            output.innerHTML = '<h4>Введенные значения:</h4>';
+            action_button.innerHTML = '<button onclick="btn_action()">Действие</button>';
+
+            for (var i = 0; i < str.length; i++) {
+                output.innerHTML += `${i+1} значение: ${str[i]}<br><br>`;
+            }
+        }
+
+        else {
+            alert("Введите валидную строку!");
+        }
+    }
+
+    function btn_action() {
+        var action_output = document.getElementById("action-output");
+
+        action_output.innerHTML = '<h4>Результат действия:</h4>';
+
+    }
+
+</script>
+<body>
+    <input id="input">
+    <button onclick="btn_input()">Ввод</button>
+    <div id="output"></div>
+    <div id="action-button"></div>
+    <div id="action-output"></div>
+</body>
+</html>
