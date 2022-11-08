@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>РК 1</title>
+</head>
+<script>
+    var str1;
+    var str2;
+    var strArr1;
+    var strArr2;
+    var valid;
+
+    function btn_input() {
+        str1 = document.getElementById("input-1").value;
+        str2 = document.getElementById("input-2").value;
+        
+        strArr1 = str1.split('');
+        strArr2 = str2.split('');
+
+        valid = true;
+        
+        try {
+            if (str1.match(/[aeiouyAEIOUY]/gi).join('') != str1 || str2.match(/[aeiouyAEIOUY]/gi).join('') != str2) {
+                valid = false;
+            }
+        }
+
+        catch {
+            valid = false;
+        }
+
+        if (valid) {
+            var output = document.getElementById("output");
+            var action_button = document.getElementById("action-button");
+
+            output.innerHTML = '<h4>Введенные последовательности:</h4>';
+            action_button.innerHTML = '<button onclick="btn_action()">Результат</button>';
+
+            output.innerHTML += `Первая последовательность: ${str1}<br>`;
+            output.innerHTML += `Вторая последовательность: ${str2}<br><br>`;
+        }
+
+        else {
+            var difference1;
+            var difference2;
+
+            try {
+                difference1 = strArr1.filter(s => !str1.match(/[aeiouyAEIOUY]/gi).join('').includes(s));
+            }
+
+            catch {
+                difference1 = ['\\'];
+            }
+
+            try {
+                difference2 = strArr2.filter(s => !str2.match(/[aeiouyAEIOUY]/gi).join('').includes(s));
+            }
+
+            catch {
+                difference2 = ['\\'];
+            }
+
+            if (str1.length == 0) {
+                alert("Первая строка пустая!");
+            }
+
+            if (str2.length == 0) {
+                alert("Вторая строка пустая!");
+            }
+
+            if (difference1.length > 0) {
+                alert(`В первой последовательности найдены недопустимые символы: ${difference1.join(', ')}`);
+            }
+
+            if (difference2.length > 0) {
+                alert(`Во второй последовательности найдены недопустимые символы: ${difference2.join(', ')}`);
+            }
+
+            alert("Введите валидные строки!");
+
+            document.getElementById("input-1").value = '';
+            document.getElementById("input-2").value = '';
+        }
+    }
+
+    function btn_action() {
+        if (valid) {
+            var action_output = document.getElementById("action-output");
+
+            let difference = strArr1.filter(s => !strArr2.includes(s));
+            let resSet = new Set(difference.join(''));
+            let resStr = Array.from(resSet).join(', ');
+
+            action_output.innerHTML = '<h4>Результат программы:</h4>';
+            action_output.innerHTML += 'Найденные гласные: ';
+
+            if (difference.length > 0) {
+                action_output.innerHTML += resStr;
+            }
+
+            else {
+                action_output.innerHTML += 'Таких гласных нет!';
+            }
+        }
+
+        else {
+            alert("Вы не можете выполнить данное действие, так как ввели невалидные строки!")
+        }
+    }
+
+</script>
+<body>
+    <p>Китаев Тагир Адипович, ИУ6-35Б</p>
+    <p>Вариант 14</p>
+    <p>Определить, какие гласные буквы латинсокго алфавита одновременно входят в первую и не входят во вторую заданные последовательнсти. Отсделить возможность ввода пустых строк и присутствия в последовательностях недопустимых символов. Выдать соответствующие сообщения об ошибках.</p>
+    <p>Введите последовательности гласных букв латинского алфавита:</p>
+    <input id="input-1">
+    <input id="input-2">
+    <button onclick="btn_input()">Ввод</button>
+    <div id="output"></div>
+    <div id="action-button"></div>
+    <div id="action-output"></div>
+</body>
+</html>
