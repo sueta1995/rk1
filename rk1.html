@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>РК 1</title>
+	<script>
+		var maximum = -1000000000;
+        var arr = [];
+		function f() {
+			var table = document.getElementsByTagName("table")[0];
+			var arr = document.getElementById("vvod").value.split(" ");
+			var n = 0;
+
+			table.innerHTML = '';
+			
+			if (document.getElementById("vvod").value != "" || document.getElementById("vvod").value.match(/[-0-9\s]+$/).length == arr.length) {
+
+				document.getElementById("field").innerHTML = ('<button onclick="max()">Определить максимум</button>');
+				
+				for (var i = 0; i < arr.length; i++)
+					if (arr[i] != "") {
+						table.innerHTML += "<tr><td> " + (n + 1).toString() + " число</td><td>" + arr[i] + "</td></tr>";
+						n += 1;
+					}
+			}
+
+			else 
+				alert("Введите правильное значение!")
+		}
+
+		function max() {
+			var isFirstNegative = false;
+			var minimum = 1000000000;
+            var iterator = 0;
+
+			var table = document.getElementsByTagName("table")[0];
+			var value = document.getElementById("vvod").value;
+
+            var n = 0;
+
+            table.innerHTML = '';
+
+			for (var i = 0; i < arr.length; i++) {
+				if (parseInt(arr[i]) > maximum) {
+					maximum = parseInt(arr[i]);
+                    iterator = i;
+                }
+
+
+				if (parseInt(arr[i]) < 0 && !isFirstNegative) {
+					isFirstNegative = true;
+					minimum = parseInt(arr[i]);
+                    iterator = i;
+				}
+				
+				else if (parseInt(arr[i]) < minimum) {
+					minimum = parseInt(arr[i]);
+                    iterator = i
+				}
+			}
+
+            arr[iterator] = maximum;
+
+            for (var i = 0; i < arr.length; i++)
+				if (arr[i] != "") {
+					table.innerHTML += "<tr><td> " + (n + 1).toString() + " число</td><td>" + arr[i] + "</td></tr>";
+					n += 1;
+					}
+		}
+	</script>
+</head>
+<body>
+	<h2>Билет N 13</h2>
+	<p>Китаев Тагир Адипович, ИУ6-35Б</p>
+	<p>Дан массив чисел arr_t. Определить максимум массива и поместить на место первого отрицвтельного элемента или минимального, если отрицательных нет</p>
+	<h4>Введите целые числа через пробел:</h4>
+	<form>
+		<input type="input" pattern="[-0-9\s]+$" id="vvod">
+		<input type="button" onclick="f()" value="Ввести">
+	</form>
+	<br>
+	<table>
+	</table>
+	<br>
+	<div id="field"></div>
+</body>
+</html>
